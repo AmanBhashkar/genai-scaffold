@@ -1,0 +1,29 @@
+[project]
+name = "{{ project_name }}"
+version = "0.1.0"
+description = "{{ description }}"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi[standard]",
+    "pydantic-settings",
+    "litellm",
+    {% if database == 'postgres' %}
+    "sqlalchemy[asyncio]",
+    "asyncpg",
+    "alembic",
+    {% else %}
+    "beanie",
+    "motor",
+    {% endif %}
+    "opentelemetry-api",
+    "opentelemetry-sdk",
+    "opentelemetry-instrumentation-fastapi",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest",
+    "pytest-asyncio",
+    "httpx",
+]

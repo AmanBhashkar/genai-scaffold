@@ -1,0 +1,18 @@
+FROM python:{{ python_version }}-slim
+
+WORKDIR /app
+
+# Install uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+# Copy dependency files
+copy pyproject.toml uv.lock ./
+
+# Install dependencies including dev dependencies
+RUN uv sync --frozen
+
+# Copy the application code
+COPY . .
+
+# Run the application with hot-reloading
+CMD ["uv", "run", "fastapi", "dev", "app/main.py", "--host", "0.0.0.0", "--port", "8000"]

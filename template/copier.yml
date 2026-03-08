@@ -1,0 +1,30 @@
+_subdirectory: app-template
+_templates_suffix: ""
+
+project_name:
+  type: str
+  help: What is the name of your project?
+  default: my-genai-app
+
+python_version:
+  type: str
+  help: Which Python version do you want to use?
+  default: "3.11"
+
+database:
+  type: str
+  help: Which database would you like to use?
+  choices:
+    - postgres
+    - mongodb
+  default: postgres
+
+enable_langsmith:
+  type: bool
+  help: Do you want to enable LangSmith for LLM observability?
+  default: true
+
+description:
+  type: str
+  help: A short description of your project.
+  default: "FastAPI-based GenAI microservice scaffolded with create-fastapi-genai."
