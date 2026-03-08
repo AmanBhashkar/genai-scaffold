@@ -1,0 +1,28 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    {% if database == 'postgres' %}
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: {{ project_name }}
+    ports:
+      - "5432:5432"
+    {% else %}
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    {% endif %}
